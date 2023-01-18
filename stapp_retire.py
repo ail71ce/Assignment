@@ -76,7 +76,6 @@ def st_display_table(df: pd.DataFrame):
     ----------
     df : pd.DataFrame
         対象のデータフレーム
-
     Returns
     -------
     なし
@@ -100,7 +99,6 @@ def st_display_graph(df: pd.DataFrame, x_col : str):
         対象のデータフレーム
     x_col : str
         対象の列名（グラフのx軸）
-
     Returns
     -------
     なし
@@ -130,7 +128,6 @@ def ml_dtree(
         目的変数の列
     depth : int
         決定木の深さ
-
     Returns
     -------
     list: [学習済みモデル, 予測値, 正解率]
@@ -161,7 +158,6 @@ def st_display_dtree(clf, features):
         学習済みモデル
     features :
         説明変数の列名
-
     Returns
     -------
     なし
@@ -236,6 +232,7 @@ def main():
 
             # 要約統計量の表示
 
+            st_display_table(df.describe())
             
         else:
             st.subheader('訓練用データをアップロードしてください')
@@ -250,7 +247,7 @@ def main():
             df = copy.deepcopy(st.session_state.df)
 
             # グラフの表示
-
+            st_display_graph(df, '退職')
             
         else:
             st.subheader('訓練用データをアップロードしてください')
@@ -271,15 +268,20 @@ def main():
             clf, train_pred, train_scores = ml_dtree(train_X, train_Y, 2)
 
             # 正解率を出力
-
+            st.caption('決定木の予測')
+            st.subheader(f"正解率：{train_scores}")
 
             # 決定木のツリーを出力
             
 
         else:
             st.subheader('訓練用データをアップロードしてください')
-        
+
+    if choice == 'About':
+        st.image(Image.open('logo_ncc.png'))
+        st.markdown('Built by student in NCC')
+        st.text('Version 0.1.0')
+        st.write('For More Information check about ncc (https://www.ncc-net.ac.jp/)')
 
 if __name__ == "__main__":
     main()
-
